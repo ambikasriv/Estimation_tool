@@ -1,0 +1,26 @@
+import pytest
+import requests
+
+BASE_URL = 'http://127.0.0.1:5000/register'
+
+@pytest.fixture
+def register_url():
+    return BASE_URL
+
+def test_register_successful(register_url):
+    data = {'name':'ambiks sri', 'email': 'new_user@example.com', 'contact':'9456932788' ,'password':'stfgbjk'}
+    response = requests.post(register_url, json=data)
+    assert response.status_code == 201
+    assert response.json['message'] == 'User registered successfully'
+
+def test_invalid_user(register_url):
+    data = {'name':'ambika srivastava', 'email': 'new_user@example.com', 'contact':'9456932788' ,'password':'stfgbjk'}
+    response = requests.post(register_url, json=data)
+    assert response.status_code == 401
+    assert response.json['error'] == 'User already exists'
+
+def test_login_incomplete_user(register_url):
+    data = {'name':'', 'email': 'new_user@example.com', 'contact':'9456932788' ,'password':'stfgbjk'}
+    response = requests.post(register_url, json=data)
+    assert response.status_code == 400
+    assert response.json['error'] == 'All fields input required'

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link rel="stylesheet"  href="../static/registration.css"> <!-- Need to update this link according to you -->
+</head>
+<body>
+    <div class="dashboard_div">
+        <h1>Randstad Digital</h1>
+        <h1>Estimation</h1>
+        <form id="estimation_Form">
+            <div>
+                <label for="Task">Task-Name :</label>
+                <input type="text" id="Task" name="Task" required>
+            </div><br>
+            <div>
+                <label for="Complexity">Complexity :</label>
+                <select id="Complexity" name="Complexity" required>
+                    <option value="" disabled selected>Select Complexity</option>
+                    <option value="3">High</option>
+                    <option value="2">Medium</option>
+                    <option value="1">Low</option>
+                </select>
+            </div><br>
+            <div>
+                <label for="Size">Size :</label>
+                <select id="Size" name="Size" required>
+                    <option value="" disabled selected>Select Size</option>
+                    <option value="3">Large</option>
+                    <option value="2">Medium</option>
+                    <option value="1">Small</option>
+                </select>
+            </div><br>
+            <div>
+                <label for="typeOfTask">Type Of Task :</label>
+                <select id="typeOfTask" name="typeOfTask" required>
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Developing">Developing</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Integration">Integration</option>
+                </select>
+            </div><br>
+            <div>
+                <label for="Notes">Notes :</label><br>
+                <textarea id="Notes" name="comments" rows="4" cols="50" required></textarea>
+            </div><br>
+        </form>
+        <button type="submit" onclick="Estimation_Submission()">Estimate</button>
+    </div>
+    <script>
+        Task = document.getElementById("Task")
+        Complexity = document.getElementById("Complexity")
+        Size = document.getElementById("Size")
+        typeOfTask = document.getElementById("typeOfTask")
+        Notes = document.getElementById("Notes")
+        function reset(){
+            Task.value = "";
+            Complexity.selectedIndex = 0;
+            Size.selectedIndex = 0;
+            typeOfTask.selectedIndex = 0;
+            Notes.value = "";
+        } 
+        function Estimation_Submission() {
+            if (Task && Complexity && Size && typeOfTask && Notes){
+                const user_data = {
+                    "Task": Task.value,
+                    "Complexity": Complexity.value,
+                    "Size": Size.value,
+                    "typeOfTask": typeOfTask.value,
+                    "Notes": Notes.value
+                };
+                const requestData = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user_data)
+                };
+                fetch("/calculate_estimation",requestData).
+                    then(response => {
+                        if (!response.ok) {
+                            throw new Error('Not Able to Get the Data')
+
+                        } 
+                        return response.json()
+                    })
+                    .then(response =>{
+                        // var estimation_id = console.l
+                        console.log(data)
+                            fetch("/api/register",{method:"GET"})
+
+                    })
+
+            } else {
+                alert("Form Fields is not filled")
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>

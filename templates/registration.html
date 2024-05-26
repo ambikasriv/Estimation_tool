@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="../static/registration.css">
+</head>
+<body>
+    <div class="Container1">
+        <h1>Registration Form</h1>
+        <div class="Container2">
+            <form id="registration-form">
+                <div class="details">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <br>
+                <div class="details">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <br>
+                <div class="details">
+                    <label for="contact">Contact Number:</label>
+                    <input type="tel" id="contact" name="contact" required maxlength="10" onkeyup="validatePhone()"> 
+                </div>
+                <br>
+                <div class="details">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <br>
+                <button type="submit" id="register-button">Register</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const name = document.getElementById('name')
+        const email = document.getElementById('email')
+        const contact = document.getElementById('contact')
+        const password = document.getElementById('password')
+        const registerButton = document.getElementById('register-button')
+        const registrationForm = document.getElementById('registration-form')
+        
+        registerButton.addEventListener('click', () => {
+            const user_data = {
+                'name':name.value,
+                'email':email.value,
+                'contact':contactvalue,
+                'password':password.value
+            }
+            const request_data = {
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(user_data)
+            };
+            fetch('/register',request_data).
+                then(response => {
+                    if (!response.ok) {
+                        throw new Error('Not able to register')
+                    }
+                    return response.json()
+                })
+                .then(response => {
+                    alert('Registration Successfully')
+                    fetch('/',{method:'GET'})
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        function validatePhone() { 
+            const phoneValue = contact.value;
+            if (/[^\d]/.test(phoneValue) || phoneValue.length !== 10) { 
+                phoneInput.classList.add("invalid"); 
+            } else { 
+                phoneInput.classList.remove("invalid"); 
+             } 
+            } 
+      </script>
+</body>
+</html>
