@@ -46,5 +46,5 @@ jobs:
         docker tag flask_app:latest ambikasr/flask_app:latest
         docker push ambikasr/flask_app:latest
 
-    - name: Deploy to Docker Hub
-      run: echo "Deploy step can be customized to your hosting solution"
+    # - name: Deploy to Docker Hub
+    #   run: echo "Deploy step can be customized to your hosting solution"
