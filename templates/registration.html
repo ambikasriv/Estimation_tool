@@ -23,7 +23,7 @@
                 <br>
                 <div class="details">
                     <label for="contact">Contact Number:</label>
-                    <input type="tel" id="contact" name="contact" required maxlength="10" onkeyup="validatePhone()"> 
+                    <input type="tel" id="contact" name="contact" pattern="[0-9]{10}" required minlength="10" maxlength="10"> 
                 </div>
                 <br>
                 <div class="details">
@@ -31,7 +31,8 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <br>
-                <button type="submit" id="register-button">Register</button>
+                <button type="submit" onclick="register()" >Register</button>
+
             </form>
         </div>
     </div>
@@ -43,11 +44,12 @@
         const registerButton = document.getElementById('register-button')
         const registrationForm = document.getElementById('registration-form')
         
-        registerButton.addEventListener('click', () => {
+        //registerButton.addEventListener('click',function(event)  {
+            function register(){
             const user_data = {
                 'name':name.value,
                 'email':email.value,
-                'contact':contactvalue,
+                'contact':contact.value,
                 'password':password.value
             }
             const request_data = {
@@ -66,19 +68,19 @@
                 })
                 .then(response => {
                     alert('Registration Successfully')
-                    fetch('/',{method:'GET'})
+                    fetch('{"Msg": "Registration done successfully"}/',{method:'GET'})
                 })
                 .catch(error => console.error('Error:', error));
-        });
+        };
 
-        function validatePhone() { 
-            const phoneValue = contact.value;
-            if (/[^\d]/.test(phoneValue) || phoneValue.length !== 10) { 
-                phoneInput.classList.add("invalid"); 
-            } else { 
-                phoneInput.classList.remove("invalid"); 
-             } 
-            } 
+        // function validatePhone() { 
+        //     const phoneValue = contact.value;
+        //     if (/[^\d]/.test(phoneValue) || phoneValue.length !== 10) { 
+        //         phoneInput.classList.add("invalid"); 
+        //     } else { 
+        //         phoneInput.classList.remove("invalid"); 
+        //      } 
+        //     } 
       </script>
 </body>
 </html>
