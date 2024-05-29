@@ -26,33 +26,39 @@
     const password = document.getElementById('password')
 
     function clickfn() {
-    if (password.value.length < 7) {
-      alert('Password length')
-    }else {
-      const user_data = {
-        'email':email,
-        'password':password
-      }
-      const requestData = {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify(data)
-      }
-      fetch('/login',requestData).
-        then(response =>{
-          if(!response.ok) {
-            throw new Error('LogIn not Successful')
-          }
-          return response.json()
-        })
-        .then(response => {
-          sessionStorage.setItem('token',access-token)
-          alert('Login Successful')
-          // fetch('/dashboard')
-        })
-        .catch(error => console.error('Error:', error));
+      if (password.value.length < 7) {
+        alert('Password length')
+      }else {
+        const user_data = {
+          'email':email.value,
+          'password':password.value
+        }
+        const requestData = {
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body: JSON.stringify(user_data)
+        }
+        fetch('/login',requestData).
+          then(response =>{
+            if(!response.ok) {
+              throw new Error('LogIn not Successful')
+            }
+            return response.json()
+          })
+          .then(data => {
+            sessionStorage.setItem('token',data.access_token)
+            alert('Login Successful')
+            var anchor = document.createElement("a");
+            anchor.href = "/calculate_estimation";
+            anchor.click();
+
+          })
+          .catch(error => {
+            alert(error)
+            console.error('Error:', error)
+          });
       }
     }
   </script>

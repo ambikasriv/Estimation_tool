@@ -10,8 +10,8 @@ def client():
 def test_login_successful(client):
     login_url = '/login'
     login_data = {
-        'email': 'akshatha@gmail.com',
-        'password': 123456
+        'email': 'ambika@gmail.com',
+        'password': 12345678
     }
     response = client.post(login_url, json=login_data)
     assert response.status_code == 200
